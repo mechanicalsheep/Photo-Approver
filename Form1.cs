@@ -26,7 +26,7 @@ namespace Photo_Approver
             imageArray = new string[di.GetFiles().Length];
             foreach(FileInfo fi in di.GetFiles())
             {
-                imageArray[index] = fi.FullName;
+                imageArray[count] = fi.FullName;
                 count++;
             }
             return imageArray;
@@ -35,6 +35,23 @@ namespace Photo_Approver
         public int getIndex()
         {
             return index;
+        }
+        public void next()
+        {
+            if (index < imageArray.Length-1)
+            {
+                index++;
+                Console.WriteLine("Index is: " + index);
+            }
+        }
+        public void previous()
+        {
+            if(index>0)
+            index--;
+        }
+        public void showImage()
+        {
+            pictureBox1.Image = System.Drawing.Image.FromFile(imageArray[index]);
         }
 
         public Form1()
@@ -60,13 +77,30 @@ namespace Photo_Approver
                 fill_ImageArray(location);
 
                 //show the first image in the path
-                pictureBox1.Image = System.Drawing.Image.FromFile(imageArray[index]);
+                showImage();
 
 
 
                 //testing environment
                 testing();
             }
+        }
+
+        private void btn_Next_Click(object sender, EventArgs e)
+        {
+            
+                next();
+                showImage();
+           
+        }
+
+        private void btn_Previous_Click(object sender, EventArgs e)
+        {
+           
+                previous();
+                showImage();
+
+           
         }
     }
 }
