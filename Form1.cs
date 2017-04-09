@@ -201,6 +201,50 @@ namespace Photo_Approver
                 MessageBox.Show("No more Photos");
             }
         }
-        
+
+        private void btn_x_Click(object sender, EventArgs e)
+        {
+            if (index != -1)
+            {
+                DirectoryInfo dir = new DirectoryInfo(str_not_approved);
+                FileInfo file = new FileInfo(imageArray[index]);
+                string getfilename = getFileName();
+
+                if (File.Exists(Path.Combine(str_not_approved, getfilename))) //&& File.Equals(file, new FileInfo(Path.Combine(str_approved,getfilename))))
+                {
+                    Console.WriteLine("File already Exists");
+                    int temp = index;
+                    if (index == imageArray.Length - 1)
+                        previous();
+                    else
+                    {
+                        next();
+                    }
+                    showImage();
+                    File.Delete(imageArray[temp]);
+                    imageArray = fill_ImageArray(location);
+                }
+                else
+                {
+                    File.Copy(imageArray[index], Path.Combine(str_not_approved, getfilename));
+                    int temp = index;
+                    if (index == imageArray.Length - 1)
+                        previous();
+                    else
+                    {
+                        next();
+                    }
+
+
+
+                    File.Delete(imageArray[temp]);
+                    imageArray = fill_ImageArray(location);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No more Photos");
+            }
+        }
     }
 }
