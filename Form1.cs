@@ -17,7 +17,7 @@ namespace Photo_Approver
         string location;
         int index=0;
         string[] imageArray;
-        int test2;
+        
 
         public string[] fill_ImageArray(string location)
         {
