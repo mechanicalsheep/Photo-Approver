@@ -35,9 +35,7 @@ namespace Photo_Approver
         public string[] fill_ImageArray(string location)
         {
             int count = 0;
-            // DirectoryInfo approved = new DirectoryInfo(str_approved);
-            // DirectoryInfo notapproved = new DirectoryInfo(str_not_approved);
-
+          
 
             DirectoryInfo di = new DirectoryInfo(location);
             imageArray = new string[di.GetFiles().Length];
@@ -51,6 +49,7 @@ namespace Photo_Approver
                 index = -1;
                 MessageBox.Show("there are no images to be approved");
                 showImage();
+                di.Delete();
             }
             else
             {
@@ -127,6 +126,7 @@ namespace Photo_Approver
 
         private void btn_Open_Click(object sender, EventArgs e)
         {
+            lbl_photoCounter.Text = " ";
             FolderBrowserDialog dlg = new FolderBrowserDialog();
             if (dlg.ShowDialog() == DialogResult.OK)
             {
@@ -180,6 +180,7 @@ namespace Photo_Approver
                         next();
                     }
                     showImage();
+
                     File.Delete(imageArray[temp]);
                     imageArray = fill_ImageArray(location);
                     lbl_photoCounter.Text = imageArray.Length + " Photo(s) Left.";
