@@ -92,8 +92,9 @@ namespace Photo_Approver
                 using (FileStream fs = new FileStream(resalaLogo, FileMode.Open))
                 {
                     pictureBox1.Image = System.Drawing.Image.FromStream(fs);
+                    lbl_photoCounter.Text = imageArray.Length + " Photo(s) Left.";
                 }
-
+               
             }
 
 
@@ -103,9 +104,12 @@ namespace Photo_Approver
                 using (FileStream fs = new FileStream(imageArray[index], FileMode.Open))
                 {
                     pictureBox1.Image = System.Drawing.Image.FromStream(fs);
+                    
                 }
-                //pictureBox1.Image = System.Drawing.Image.FromFile(imageArray[index]);
+           
+
             }
+            lbl_photoCounter.Text = imageArray.Length + " Photo(s) Left.";
         }
 
         public Form1()
@@ -145,7 +149,7 @@ namespace Photo_Approver
         {
 
             next();
-            //showImage();
+         
 
         }
 
@@ -153,20 +157,20 @@ namespace Photo_Approver
         {
 
             previous();
-            //showImage();
+      
 
 
         }
 
         private void btn_Approve_Click(object sender, EventArgs e)
         {
-            if (index != -1)
+            if (index != -1 || imageArray!=null)
             {
                 DirectoryInfo dir = new DirectoryInfo(str_approved);
                 FileInfo file = new FileInfo(imageArray[index]);
                 string getfilename = getFileName();
 
-                if (File.Exists(Path.Combine(str_approved, getfilename))) //&& File.Equals(file, new FileInfo(Path.Combine(str_approved,getfilename))))
+                if (File.Exists(Path.Combine(str_approved, getfilename))) 
                 {
                     Console.WriteLine("File already Exists");
                     int temp = index;
@@ -178,6 +182,9 @@ namespace Photo_Approver
                     showImage();
                     File.Delete(imageArray[temp]);
                     imageArray = fill_ImageArray(location);
+                    lbl_photoCounter.Text = imageArray.Length + " Photo(s) Left.";
+
+
                 }
                 else
                 {
@@ -194,12 +201,14 @@ namespace Photo_Approver
 
                     File.Delete(imageArray[temp]);
                     imageArray = fill_ImageArray(location);
+                    lbl_photoCounter.Text = imageArray.Length + " Photo(s) Left.";
                 }
             }
             else
             {
                 MessageBox.Show("No more Photos");
             }
+            
         }
 
         private void btn_x_Click(object sender, EventArgs e)
@@ -210,7 +219,7 @@ namespace Photo_Approver
                 FileInfo file = new FileInfo(imageArray[index]);
                 string getfilename = getFileName();
 
-                if (File.Exists(Path.Combine(str_not_approved, getfilename))) //&& File.Equals(file, new FileInfo(Path.Combine(str_approved,getfilename))))
+                if (File.Exists(Path.Combine(str_not_approved, getfilename))) 
                 {
                     Console.WriteLine("File already Exists");
                     int temp = index;
@@ -223,6 +232,7 @@ namespace Photo_Approver
                     showImage();
                     File.Delete(imageArray[temp]);
                     imageArray = fill_ImageArray(location);
+                    lbl_photoCounter.Text = imageArray.Length + " Photo(s) Left.";
                 }
                 else
                 {
@@ -239,6 +249,7 @@ namespace Photo_Approver
 
                     File.Delete(imageArray[temp]);
                     imageArray = fill_ImageArray(location);
+                    lbl_photoCounter.Text = imageArray.Length + " Photo(s) Left.";
                 }
             }
             else
