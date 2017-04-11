@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Configuration;
+using System.Collections.Specialized;
 
 namespace Photo_Approver
 {
@@ -20,12 +21,17 @@ namespace Photo_Approver
         string str_approved = "D:\\playground\\approved";
         string str_not_approved = "D:\\playground\\not approved";
         string resalaLogo = "D:\\resalalogo.png";
-        string str_to_be_approved = @"D:\playground\to be approved\";
-
+        // string str_to_be_approved = @"D:\playground\to be approved\";
+     string str_to_be_approved = ConfigurationManager.AppSettings.Get("path");
+        
+ 
+        
+        //string str_to_be_approved =
         public Form1 Parent { get; set; }
         
         public string getFileName()
         {
+            
             FileInfo currfile = new FileInfo(imageArray[index]);
             Console.WriteLine(currfile.Name);
             return currfile.Name;
@@ -127,6 +133,10 @@ namespace Photo_Approver
         public Form1()
         {
             InitializeComponent();
+            //Console.WriteLine("HELLO");
+            //  WORKING APP.CONFIG GET
+          // string test = ConfigurationManager.AppSettings.Get(0);
+          //  Console.WriteLine(" "+test);
         }
 
         public void testing()
@@ -150,6 +160,7 @@ namespace Photo_Approver
             dlg.RootFolder = Environment.SpecialFolder.MyComputer;
 
             // dlg.RootFolder = str_to_be_approved;
+            
             dlg.SelectedPath = str_to_be_approved;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
