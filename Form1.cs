@@ -20,9 +20,10 @@ namespace Photo_Approver
         string str_approved = "D:\\playground\\approved";
         string str_not_approved = "D:\\playground\\not approved";
         string resalaLogo = "D:\\resalalogo.png";
+        string str_to_be_approved = @"D:\playground\to be approved\";
 
-
-
+        public Form1 Parent { get; set; }
+        
         public string getFileName()
         {
             FileInfo currfile = new FileInfo(imageArray[index]);
@@ -49,7 +50,14 @@ namespace Photo_Approver
                 index = -1;
                 MessageBox.Show("there are no images to be approved");
                 showImage();
-                di.Delete();
+                try
+                {
+                    di.Delete();
+                }
+                catch(IOException e)
+                {
+                    MessageBox.Show("No images in this folder.");
+                }
             }
             else
             {
@@ -70,6 +78,11 @@ namespace Photo_Approver
                 Console.WriteLine("Index is: " + index);
                 showImage();
             }
+        }
+
+        public void test2()
+        {
+            MessageBox.Show("SUCCESS");
         }
         public void previous()
         {
@@ -124,10 +137,20 @@ namespace Photo_Approver
             }
         }
 
-        private void btn_Open_Click(object sender, EventArgs e)
+        public void open_Folder(string path)
+        {
+            location = path;
+            fill_ImageArray(location);
+            showImage();
+        }
+        public void open_Folder()
         {
             lbl_photoCounter.Text = " ";
             FolderBrowserDialog dlg = new FolderBrowserDialog();
+            dlg.RootFolder = Environment.SpecialFolder.MyComputer;
+
+            // dlg.RootFolder = str_to_be_approved;
+            dlg.SelectedPath = str_to_be_approved;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
 
@@ -143,6 +166,10 @@ namespace Photo_Approver
                 //testing environment
                 testing();
             }
+        }
+        private void btn_Open_Click(object sender, EventArgs e)
+        {
+            open_Folder();
         }
 
         private void btn_Next_Click(object sender, EventArgs e)
@@ -257,6 +284,16 @@ namespace Photo_Approver
             {
                 MessageBox.Show("No more Photos");
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form2 f2 = new Form2();
+            f2.superForm = this;
+            //f2.Updated += (se, ev) => btn_Approve.Text = "test success";
+            f2.ShowDialog();
+
+            
         }
     }
 }
