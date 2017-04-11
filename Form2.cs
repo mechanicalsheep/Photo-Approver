@@ -44,7 +44,7 @@ namespace Photo_Approver
 
                     //Console.WriteLine("Path: "+ Path.Combine(@"D:\playground\to be approved\", bu.Name.ToString()));
                    superForm.open_Folder(Path.Combine(@"D:\playground\to be approved\",bu.Text));
-                   this.Close();
+                    this.Close();
                     //MessageBox.Show("success!");
                 }
             }
