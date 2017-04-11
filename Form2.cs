@@ -10,9 +10,16 @@ using System.Windows.Forms;
 using System.IO;
 namespace Photo_Approver
 {
-    public partial class Form2 : Form1
+    public partial class Form2 : Form
     {
         List<Button> buttons = new List<Button>();
+        public event EventHandler Updated;
+        public Form1 superForm{ get; set; }
+      /*public Form2(Form fm)
+        {
+            this.Parent = fm;
+        
+        }*/
         public Form2()
         {
             InitializeComponent();
@@ -32,16 +39,25 @@ namespace Photo_Approver
             {
                 if(sender == bu)
                 {
-                    
+                    //WORKING TEST!!!!!!!!!!!!!!!!!!
+                    //superForm.test2();
+
+                    Console.WriteLine("Path: "+ Path.Combine(@"D:\playground\to be approved\", bu.Name.ToString()));
+                   superForm.open_Folder(Path.Combine(@"D:\playground\to be approved\",bu.Text));
                     //MessageBox.Show("success!");
                 }
             }
         }
         private void btnOpen_Click(object sender, EventArgs e)
         {
-            
+            /* if (Updated != null)
+              {
+                  Updated(sender, new EventArgs()); //Raise a change.
+              }
+              */
            
-            foreach(DirectoryInfo dir in di.GetDirectories())
+     
+            foreach (DirectoryInfo dir in di.GetDirectories())
             {
                 Button b = new Button();
                 b.Text = dir.Name;
