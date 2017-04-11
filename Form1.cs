@@ -20,7 +20,7 @@ namespace Photo_Approver
         string str_approved = "D:\\playground\\approved";
         string str_not_approved = "D:\\playground\\not approved";
         string resalaLogo = "D:\\resalalogo.png";
-
+        string str_to_be_approved = @"D:\playground\to be approved\";
 
 
         public string getFileName()
@@ -49,7 +49,14 @@ namespace Photo_Approver
                 index = -1;
                 MessageBox.Show("there are no images to be approved");
                 showImage();
-                di.Delete();
+                try
+                {
+                    di.Delete();
+                }
+                catch(IOException e)
+                {
+                    MessageBox.Show("No images in this folder.");
+                }
             }
             else
             {
@@ -128,6 +135,10 @@ namespace Photo_Approver
         {
             lbl_photoCounter.Text = " ";
             FolderBrowserDialog dlg = new FolderBrowserDialog();
+            dlg.RootFolder = Environment.SpecialFolder.MyComputer;
+            
+           // dlg.RootFolder = str_to_be_approved;
+           dlg.SelectedPath=str_to_be_approved;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
 
@@ -257,6 +268,12 @@ namespace Photo_Approver
             {
                 MessageBox.Show("No more Photos");
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form2 f2 = new Form2();
+            f2.ShowDialog();
         }
     }
 }
